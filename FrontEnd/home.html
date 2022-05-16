@@ -23,7 +23,7 @@
             <button type = "button" id = "removeTaskButton">Remove</button>
         </form> -->
 
-        <p class = "lines"></p>
+        <p class = "lines" id = "lines"></p>
 
         <ul id = "list"></ul>
 
@@ -41,13 +41,14 @@
                     return;
                 }
                 taskArray.push(eventName);
-                    let box = document.createElement("li");
+                    let li = document.createElement("li");
                     let tag = document.createTextNode(eventName);
-                    box.id = eventName;
-                    box.class = classVar;
-                    box.append(tag);
-                document.getElementById("list").append(box);
-                document.getElementById(box.id).addEventListener("click",clicked);
+                    li.id = eventName;
+                    li.class = classVar;
+                    li.append(tag);
+                document.getElementById("list").append(li);
+                document.getElementById(li.id).addEventListener("click",clicked);
+                // Increase the size for lines
             }
             function clicked(){
                 name = this.id;
@@ -69,6 +70,16 @@
             function clearList(){
                 taskArray = "";
             }
+            function removeItem(){
+
+            }
+
+            document.getElementById("addTaskButton").addEventListener("click", addTask);
+            document.getElementById("clear").addEventListener("click", clearList);
+            document.getElementById("remove").addEventListener("click", removeItem);
+
+            // document.getElementById("hideRemoveTaskButton").addEventListener("click", hideRemove);
+            // document.getElementById("removeTaskForm").style.display = "none";
 
             // SOON TO BE USELESS
             //
@@ -84,27 +95,20 @@
                 document.getElementById("removeTaskForm").style.display = "none";
                 document.getElementById("addTaskForm").style.display = "block";
             }
-            function removeItem(){
-            }
-            function updateList(){
-                taskArray.push(eventName);
-                    let box = document.createElement("li");
-                    let tag = document.createTextNode(eventName);
-                    box.id = eventName;
-                    box.class = classVar;
-                    box.append(tag);
-                document.getElementById("list").append(box);
-            }
-            document.getElementById("addTaskButton").addEventListener("click", addTask);
-            document.getElementById("clear").addEventListener("click", clearList);
-            document.getElementById("remove").addEventListener("click", showRemove);
-            document.getElementById("hideRemoveTaskButton").addEventListener("click", hideRemove);
+                        // function updateList(){
+            //     taskArray.push(eventName);
+            //         let box = document.createElement("li");
+            //         let tag = document.createTextNode(eventName);
+            //         box.id = eventName;
+            //         box.class = classVar;
+            //         box.append(tag);
+            //     document.getElementById("list").append(box);
+            // }
+                        //
+            //
+            //
+            //
 
-            document.getElementById("removeTaskForm").style.display = "none";
-            //
-            //
-            //
-            //
 
         </script>
     </body>
