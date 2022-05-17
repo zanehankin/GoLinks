@@ -1,11 +1,11 @@
-<!-- 7:56am - 5/17 -->
+<!-- 8:35am - 5/17 -->
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <!-- <title>To Do List</title> -->
-    <title>Working Page</title>
+    <title>To Do List</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,7 +14,7 @@
         <!-- Various titles depending on the page view -->
         <h1 id="td">To Do List - All Tasks</h1>
         <h1 id="ct">To Do List - Completed Tasks</h1>
-        <h1 id="ict">To Do List - Incompleted Tasks</h1>
+        <h1 id="ict">To Do List - Incomplete Tasks</h1>
         <h2 id="rio">REMOVING ITEM ON</h2>
 
         <p id="stats"></p>
@@ -26,9 +26,9 @@
             <button type="button" id="clear">Clear List</button>
             <button type="button" id="removeItem">Remove Item</button>
             <br>
-            <button type="button" id="showAllTasks">Show All Tasks</button>
-            <button type="button" id="showRed">Show Incompleted Tasks</button>
-            <button type="button" id="showGreen">Show Completed Tasks</button>
+            <button type="button" id="showAllTasks">Manage All Tasks</button>
+            <button type="button" id="showRed">View Incomplete Tasks</button>
+            <button type="button" id="showGreen">View Completed Tasks</button>
         </form>
 
         <!-- A p tag that allows us some styling to make it look like lined paper -->
@@ -71,7 +71,7 @@
                 }
             }
             taskArray.push(eventName); // Push the name of the task to the array
-            addTaskToRed(eventName); // Since this is an incompleted task, also push this to the incompleted list
+            addTaskToRed(eventName); // Since this is an incomplete task, also push this to the incomplete list
 
             let li = document.createElement("li"); // Then, create a list element
             let tag = document.createTextNode(eventName); // Create a text node for the event name 
@@ -147,7 +147,8 @@
             name = this.id;
             classs = this.className;
             // Set the boolean value of "completed"
-                // 
+                // Completed means if the task was completed, so if it is green it is true
+                // Else the task is incomplete, thus red
             if (this.className == "green") {
                 completed = true;
             }
@@ -155,7 +156,12 @@
                 completed = false;
             }
             //
-            if (remove) {
+            // The following if statement will check if the remove boolean is true
+                // If it is true, the next click will be removed
+                // The if statement that checks if (completed) is to check if
+                    // The element should be removed from the Green list or Red List
+                // And then the item will be removed from the Master List
+            if (remove) { 
                 if(completed){
                     removeFromGreen(name);
                 }
@@ -167,62 +173,55 @@
             }
             else {
                 if (completed) {
-                    //False
+                    //True
                     //This.className = red
-                    console.log(completed);
-                    console.log(name);
-                    console.log(classs);
                     this.className = "red";
-
+                    // Add the task to red and remove from Green, as you 
+                    // can tell by these creative function names
                     addTaskToRed(name);
                     removeFromGreen(name);
-
+                    // Reset the styling for the incomplete list items
                     document.getElementById(name).style.color = "#cd0000";
                     document.getElementById(name).style.textDecoration = "none";
-
-                    console.log("4: RedL :" + red.length + " GreenL :" + green.length);
+                    // Update our counter
                     document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
-                    console.log("end of IF");
                 }
                 else {
                     // False
                     //This.className = green
-                    console.log(completed);
-                    console.log(name);
-                    console.log(classs);
                     this.className = "green";
-
+                    // Add the task to green and remove from red
                     addTaskToGreen(name);
                     removeFromRed(name);
-
+                    // Set the styling for the completed list items
                     document.getElementById(name).style.color = "#6acd00";
                     document.getElementById(name).style.textDecoration = "line-through";
-
-                    console.log("5: RedL :" + red.length + " GreenL :" + green.length);
+                    // Update our counter
                     document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
-                    console.log("end of else");
                 }
             }
         }
         ////
 
         ////
+        // This function clears the entire list, clearing the taskArray, Red array, and Green Array
         function clearList() {
-            if (taskArray.length > 0) {
+            if (taskArray.length > 0) { // Ensuring the taskArray length is not less than 0
+                // Using the splice function, start at 0 and get rid of everything in the function
+                // repeat for Red, Green arrays
                 taskArray.splice(0, taskArray.length);
                 document.getElementById("list").innerHTML = "";
                 taskArray.splice(0, red.length);
                 document.getElementById("red").innerHTML = "";
                 taskArray.splice(0, green.length);
                 document.getElementById("green").innerHTML = "";
+                // Ensure the length is reset to 0
                 red.length = 0;
                 green.length = 0;
-
-                console.log("6: RedL :" + red.length + " GreenL :" + green.length);
+                // Update our counter
                 document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
-
             }
-            else {
+            else { // If there are no elements in the array, you will not be able to clear the array
                 alert("Cannot clear an empty list");
                 return;
             }
@@ -230,13 +229,19 @@
         ////
 
         ////
+        // This function sets the BOOLEAN remove to the opposite of whatever it is
+        // i.e. Since it starts at false, it will then be true once selected
+            // it will then be reset to false at the end of the removeFromTaskArray function
         function removeItem() {
             console.log("remove");
             remove = !remove;
-            checkRemove();
+            checkRemove(); // Calls to the subsequent function
         }
         ////
 
+        ////
+        // This function checks the status of the remove boolean, alerting the 
+            // user of this change at the top of the document if so
         function checkRemove(){
             if(remove){
                 document.getElementById("rio").style.display = "block";
@@ -245,25 +250,26 @@
                 document.getElementById("rio").style.display = "none";
             }
         }
+        ////
 
         ////
+        // This function removes an individual task from the list
         function removeFromTaskArray(eventName) {
-            console.log("removing from task array");
-            // removeFromGreen(eventName);
-            // removeFromRed(eventName);
-
-            if (taskArray.length >= 1) {
+            if (taskArray.length >= 1) { // Ensuring there are elements in the array to remove
+                // This uses the same functionality as the removeFromRed & removeFromGreen functions above
                 const element = document.getElementById(eventName);
                 element.remove();
-                taskArray.length -= 1;
+                taskArray.length -= 1; // Update the task array length
             }
-            remove = false;
-            console.log("3: RedL :" + red.length + " GreenL :" + green.length);
+            remove = false; // Resets the remove variable (as mentioned above) which allows
+                            // users to continue using the to do list seemlessly after a removal
+            // Update our counter
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
         }
         ////
 
         ////
+        // This function sets the page view for the Show All Tasks Button
         function showAllTasks() {
             document.getElementById("list").style.display = "block";
             document.getElementById("red").style.display = "none";
@@ -272,6 +278,7 @@
             document.getElementById("ct").style.display = "none";
             document.getElementById("ict").style.display = "none";
         }
+        // This function sets the page view for the Show Incomplete Tasks Button
         function showRed() {
             document.getElementById("list").style.display = "none";
             document.getElementById("red").style.display = "block";
@@ -280,6 +287,7 @@
             document.getElementById("ict").style.display = "block";
             document.getElementById("ct").style.display = "none";
         }
+        // This function sets the page view for the Show Complete Tasks Button
         function showGreen() {
             document.getElementById("list").style.display = "none";
             document.getElementById("red").style.display = "none";
@@ -291,13 +299,14 @@
         ////
 
         ////
+        // Here are various event listeners for the buttons we created at the top, linking to their respective functions
         document.getElementById("addTaskButton").addEventListener("click", addTask);
         document.getElementById("clear").addEventListener("click", clearList);
         document.getElementById("showAllTasks").addEventListener("click", showAllTasks);
         document.getElementById("showRed").addEventListener("click", showRed);
         document.getElementById("showGreen").addEventListener("click", showGreen);
         document.getElementById("removeItem").addEventListener("click", removeItem);
-
+        // Here are the default styling displays, which are changed depending on the button / function
         document.getElementById("green").style.display = "none";
         document.getElementById("red").style.display = "none";
         document.getElementById("list").style.display = "block";
@@ -306,8 +315,6 @@
         document.getElementById("ict").style.display = "none";
         document.getElementById("rio").style.display = "none";
         ////
-
-
     </script>
 </body>
 
