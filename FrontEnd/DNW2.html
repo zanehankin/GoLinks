@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="doc">
+        <h1>To Do List</h1>
+
+        <p id="stats"></p>
+
+        <form method="POST" id="addTaskForm" class="addTask">
+            <input type="text" id="taskTitle" placeholder="Task Title..." class="addTask" required>
+            <button type="button" id="addTaskButton">Add</button>
+            <button type="button" id="clear">Clear List</button>
+            <button type="button" id="showAllTasks">Show All Tasks</button>
+            <button type="button" id="showRed">Show InCompleted Tasks</button>
+            <button type="button" id="showGreen">Show Completed Tasks</button>
+            <!-- <button type = "button" id="remove">Remove Item</button> -->
+        </form>
+
+        <!-- <form id = "removeTaskForm">
+            <button type = "button" id = "hideRemoveTaskButton">Back</button>
+            <input type = "text" id = "removeTask" placeholder="Remove Task..." class = "removeTask" required>
+            <button type = "button" id = "removeTaskButton">Remove</button>
+        </form> -->
+
+        <p class="lines" id="lines"></p>
+
+        <ul id="list">
+            <!-- <li ></li> -->
+            <!-- <li id="green"></li> -->
+            <!-- <li id="red"></li>  -->
+        </ul>
+
+    </div>
+
+    <script>
+        ////
+        const taskArray = [];
+        completed = false;
+        selected = false;
+        remove = false;
+        red = [];
+        green = [];
+        ////
+
+        ////
+        function addToAll() {
+            let eventName = document.getElementById("taskTitle").value;
+            if (eventName == "") {
+                alert("Task Cannot Be Empty")
+                return;
+            }
+            taskArray.push(eventName);
+            let li = document.createElement("li");
+            let tag = document.createTextNode(eventName);
+            li.id = eventName;
+            li.appendChild(tag);
+            document.getElementById("list").append(li);
+            document.getElementById(li.id).addEventListener("click", clicked);
+            addToRed();
+        }
+        ////
+
+        ////
+        function addToRed() {
+            let eventName = document.getElementById("taskTitle").value;
+            if (eventName == "") {
+                alert("Task Cannot Be Empty")
+                return;
+            }
+            taskArray.push(eventName);
+            let li = document.createElement("li");
+            let tag = document.createTextNode(eventName);
+            li.id = eventName;
+            li.appendChild(tag);
+            document.getElementById("list").append(li);
+            document.getElementById(li.id).addEventListener("click", clicked);
+            // document.getElementById("red").append(li);
+            red.push(li);
+            document.getElementById("red").append(li);
+            redL = red.length;
+            greenL = green.length;
+            // green = 10;
+            document.getElementById("stats").innerHTML = "Incomplete: " + redL + " | Complete: " + greenL;
+        }
+        ////
+        
+        ////
+        function addToGreen() {
+            let eventName = document.getElementById("taskTitle").value;
+            if (eventName == "") {
+                alert("Task Cannot Be Empty")
+                return;
+            }
+            taskArray.push(eventName);
+            let li = document.createElement("li");
+            let tag = document.createTextNode(eventName);
+            li.id = eventName;
+            li.appendChild(tag);
+            document.getElementById("list").append(li);
+            document.getElementById(li.id).addEventListener("click", clicked);
+            // document.getElementById("red").append(li);
+            red.push(li);
+            document.getElementById("red").append(li);
+            redL = red.length;
+            greenL = green.length;
+            // green = 10;
+            document.getElementById("stats").innerHTML = "Incomplete: " + redL + " | Complete: " + greenL;
+        }
+        ////
+
+        ////
+        function clicked() {
+            name = this.id;
+            if (completed) {
+                completed = false;
+                document.getElementById(name).style.color = "#cd0000";
+                document.getElementById(name).style.textDecoration = "none";
+
+                let li = document.createElement("li");
+                let tag = document.createTextNode(eventName);
+                li.id = name;
+                li.appendChild(tag);
+                // document.getElementById(li.id).addEventListener("click", clicked);
+            }
+            else {
+                // alert(red);
+                // alert(taskArray.length);
+                // alert(green);
+                completed = true;
+                document.getElementById(name).style.color = "#6acd00";
+                document.getElementById(name).style.textDecoration = "line-through";
+                document.getElementById("green").append(name);
+                document.getElementById("stats").innerHTML = "Incomplete: " + red + " | Complete: " + green;
+            }
+        }
+        ////
+        function clearList() {
+            if (taskArray.length > 0) {
+                taskArray = "";
+            }
+            else {
+                alert("Cannot clear an empty list");
+                return;
+            }
+        }
+        ////
+
+        ////
+        function viewF() {
+            // for(let i = 0; i < red.)
+        }
+        function showAllTasks() {
+            document.getElementById("list").style.display = "block";
+            document.getElementById("red").style.display = "none";
+            document.getElementById("green").style.display = "none";
+        }
+        function showRed() {
+            document.getElementById("list").style.display = "none";
+            document.getElementById("red").style.display = "block";
+            document.getElementById("green").style.display = "none";
+        }
+        function showGreen() {
+            document.getElementById("list").style.display = "none";
+            document.getElementById("red").style.display = "none";
+            document.getElementById("green").style.display = "block";
+        }
+
+        document.getElementById("addTaskButton").addEventListener("click", addTask);
+        document.getElementById("clear").addEventListener("click", clearList);
+        document.getElementById("showAllTasks").addEventListener("click", showAllTasks);
+        document.getElementById("showRed").addEventListener("click", showRed);
+        document.getElementById("showGreen").addEventListener("click", showGreen);
+        document.getElementById("green").style.display = "none";
+        document.getElementById("red").style.display = "none";
+        document.getElementById("list").style.display = "block";
+
+    </script>
+</body>
+
+</html>

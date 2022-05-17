@@ -1,4 +1,4 @@
-<!-- 2:54pm -->
+<!-- 4:47pm -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,17 +54,14 @@
                 return;
             }
             taskArray.push(eventName);
-            addTaskToRed(eventName);
-
             let li = document.createElement("li");
             let tag = document.createTextNode(eventName);
             li.id = eventName;
-            li.className = "red";
             li.appendChild(tag);
             document.getElementById("list").append(li);
             document.getElementById(li.id).addEventListener("click", clicked);
-
-            console.log("1: RedL :" + red.length+ " GreenL :" + green.length);
+            addTaskToRed(eventName);
+        console.log("1: RedL :" + red.length+ " GreenL :" + green.length);
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
         }
         ////
@@ -75,32 +72,42 @@
             let li = document.createElement("li");
             let tag = document.createTextNode(eventName);
             li.id = eventName + "r";
-            li.className = "red";
             li.appendChild(tag);
             document.getElementById("red").append(li);
+            document.getElementById(li.id).addEventListener("click", clicked);
         }
         ////
 
+        // ////
+        // function addTaskToGreen(eventName) {
+        //     red.push(eventName);
+        //     let li = document.createElement("li");
+        //     let tag = document.createTextNode(eventName);
+        //     li.id = eventName + "r";
+        //     li.appendChild(tag);
+        //     document.getElementById("red").append(li);
+        //     document.getElementById(li.id).addEventListener("click", clicked);
+        // }
+        // ////
+
         ////
-        function addTaskToGreen(eventName) {
+        function redTOgreen(eventName) {
+            let index = red.indexOf(eventName);
             green.push(eventName);
             let li = document.createElement("li");
             let tag = document.createTextNode(eventName);
-            li.id = eventName + "g";
-            li.className = "green";
+            li.id = eventName + "g"
             li.appendChild(tag);
-            document.getElementById("green").append(li);
-        }
-        ////
 
-        ////
-        function removeFromRed(eventName) {
-            if(red.length >= 1){
-                const element = document.getElementById(eventName + "r");
-                element.remove();
-                red.length -= 1;
-            }
-            // element.remove();
+            const element = document.getElementById(eventName + "r");
+            element.remove();
+            // red.length -= 1;
+            // alert(red.length);
+
+            document.getElementById("green").append(li);
+            document.getElementById(eventName).style.color = "#6acd00";
+            document.getElementById(eventName).style.textDecoration = "line-through";
+            document.getElementById(li.id).addEventListener("click", clicked);
 
             console.log("2: RedL :" + red.length + " GreenL :" + green.length);
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
@@ -108,12 +115,29 @@
         ////
 
         ////
-        function removeFromGreen(eventName) {
-            if(green.length >= 1){
-                const element = document.getElementById(eventName + "g");
-                element.remove();
-                green.length -= 1;
+        function greenTOred(eventName) {
+            let index = green.indexOf(eventName);
+            red.push(eventName);
+            let li = document.createElement("li");
+            let tag = document.createTextNode(eventName);
+            li.id = eventName + "r";
+            li.appendChild(tag);
+
+            if(green.length <= 1){
+            //     document.getElementById("green").innerHTML = "";
+            //     taskArray.splice(0, green.length);
+                // red.length = 0;
+                // green.length = 0;
             }
+
+            const element = document.getElementById(eventName + "g");
+            element.remove();
+
+            document.getElementById("red").append(li);
+            document.getElementById(eventName).style.color = "#6acd00";
+            document.getElementById(eventName).style.textDecoration = "line-through";
+            document.getElementById(li.id).addEventListener("click", clicked);
+
             console.log("3: RedL :" + red.length + " GreenL :" + green.length);
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
         }
@@ -121,55 +145,28 @@
 
         ////
         function clicked() {
-            // alert("clicked");
             name = this.id;
-            classs = this.className;
-            // if(this.className == "red"){
-            if(this.className == "green"){
-                completed = true;
-            }
-            else{
+            if (completed) {
                 completed = false;
-            }
-            if(completed){
-                //False
-                //This.className = red
-                console.log(completed);
-                console.log(name);
-                console.log(classs);
-                this.className = "red";
-
-                addTaskToRed(name);
-                removeFromGreen(name);
-
+                greenTOred(name);
                 document.getElementById(name).style.color = "#cd0000";
                 document.getElementById(name).style.textDecoration = "none";
+                green.length -= 1;
 
-                console.log("4: RedL :" + red.length + " GreenL :" + green.length);
+            console.log("4: RedL :" + red.length + " GreenL :" + green.length);
                 document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
-                console.log("end of IF");
-            }                
+            }
             else {
-                // False
-                //This.className = green
-                console.log(completed);
-                console.log(name);
-                console.log(classs);
-                this.className = "green";
-
-                addTaskToGreen(name);
-                removeFromRed(name);
-
+                completed = true;
+                redTOgreen(name);
                 document.getElementById(name).style.color = "#6acd00";
                 document.getElementById(name).style.textDecoration = "line-through";
+                red.length -= 1;
 
-                console.log("5: RedL :" + red.length + " GreenL :" + green.length);
+            console.log("5: RedL :" + red.length + " GreenL :" + green.length);
                 document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
-                console.log("end of else");
             }
         }
-        ////
-
         ////
         function clearList() {
             if (taskArray.length > 0) {
@@ -194,6 +191,9 @@
         ////
 
         ////
+        function viewF() {
+            // for(let i = 0; i < red.)
+        }
         function showAllTasks() {
             document.getElementById("list").style.display = "block";
             document.getElementById("red").style.display = "none";
@@ -218,9 +218,7 @@
             document.getElementById("ict").style.display = "none";
             document.getElementById("ct").style.display = "block";
         }
-        ////
 
-        ////
         document.getElementById("addTaskButton").addEventListener("click", addTask);
         document.getElementById("clear").addEventListener("click", clearList);
         document.getElementById("showAllTasks").addEventListener("click", showAllTasks);
@@ -232,7 +230,6 @@
         document.getElementById("td").style.display = "block";
         document.getElementById("ct").style.display = "none";
         document.getElementById("ict").style.display = "none";
-        ////
 
     </script>
 </body>

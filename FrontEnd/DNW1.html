@@ -1,0 +1,288 @@
+<!-- DOES NOT WORK -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="doc">
+        <h1>To Do List</h1>
+
+        <p id="stats"></p>
+
+        <form method="POST" id="addTaskForm" class="addTask">
+            <input type="text" id="taskTitle" placeholder="Task Title..." class="addTask" required>
+            <button type="button" id="addTaskButton">Add</button>
+            <button type="button" id="clear">Clear List</button>
+            <button type="button" id="showAllTasks">Show All Tasks</button>
+            <!-- <button type = "button" id="remove">Remove Item</button> -->
+        </form>
+
+        <!-- <form id = "removeTaskForm">
+            <button type = "button" id = "hideRemoveTaskButton">Back</button>
+            <input type = "text" id = "removeTask" placeholder="Remove Task..." class = "removeTask" required>
+            <button type = "button" id = "removeTaskButton">Remove</button>
+        </form> -->
+
+        <p class="lines" id="lines"></p>
+
+        <ul id="list"></ul>
+    </div>
+
+    <script>
+        ////
+        const taskArray = [];
+        completed = false;
+        selected = false;
+        remove = false;
+        const red = [];
+        const green = [];
+        ////
+
+        ////
+        function addTask() {
+            let eventName = document.getElementById("taskTitle").value;
+            if (eventName == "") {
+                alert("Task Cannot Be Empty")
+                return;
+            }
+            taskArray.push(eventName);
+            // showAll();
+            // let li = document.createElement("li");
+            // let tag = document.createTextNode(eventName);
+            // li.id = eventName;
+            // li.appendChild(tag);
+            // document.getElementById("list").append(li);
+            // document.getElementById(li.id).addEventListener("click", clicked);
+
+            // let box = document.createElement("input");
+            // box.type = "checkbox";
+            // box.id = eventName;
+            // document.getElementById("list").append(box);
+            // var checkbox = document.querySelectorAll("input[type=checkbox]");
+            // for (let i = 0; i < checkbox.length; ++i) {
+            //     checkbox[i].addEventListener('change', check);
+            // }
+        }
+        function showAll() {
+            for (let i = 0; i < taskArray.length; ++i) {
+                let eventName = taskArray[i];
+                let li = document.createElement("li");
+                let tag = document.createTextNode(eventName);
+                li.id = eventName;
+                li.appendChild(tag);
+                document.getElementById("list").append(li);
+                document.getElementById(li.id).addEventListener("click", clicked);
+            }
+        }
+        function showAllTasks(){
+            showAll();
+                        // clearList();
+        }
+        ////
+
+        ////
+        function clicked() {
+            name = this.id;
+            if (completed) {
+                completed = false;
+                document.getElementById(name).style.color = "#cd0000";
+                document.getElementById(name).style.textDecoration = "none";
+            }
+            else {
+                completed = true;
+                document.getElementById(name).style.color = "#6acd00";
+                document.getElementById(name).style.textDecoration = "line-through";
+            }
+        }
+        ////
+        function clearList() {
+            if (taskArray.length > 0) {
+
+                // alert(taskArray.length);
+                let list = document.getElementById("list");
+                var e = document.querySelector("li");
+                let child = list.lastElementChild;
+                while(child){
+                    list.removeChild(child);
+                    child = list.lastElementChild;
+                }
+
+                // let children = list.childNodes;
+                // for(let i = 0; i < children.length; ++i){
+                //     children[i].remove;
+                // }
+                // children.forEach(li => {
+                //     console.log(li.innerText);
+                //     // li.removeChild();
+                // });
+
+                // for (let i = 0; i < taskArray.length; ++i) {
+                //     let eventName = taskArray[i];
+                //     let li = document.createElement("li");
+                //     let tag = document.createTextNode(eventName);
+                //     li.id = eventName;
+                //     li.removeChild(tag);
+                //     document.getElementById("list").removeChild(li);
+                //     // document.getElementById(li.id).addEventListener("click", clicked);
+                // }
+
+                // for (let i = 0; i < taskArray.length; ++i) {
+                //     document.getElementById("list").removeChild(i);
+                // }
+            }
+            else {
+                alert("Cannot clear an empty list");
+                return;
+            }
+        }
+        ////
+
+        ////
+        function viewF() {
+            // for(let i = 0; i < red.)
+        }
+        ////
+
+        // function removeItem() {
+        //     remove = true;
+        //     alert("remove = " + remove);
+        // }
+        // function check() {
+        //     name = this.id;
+        //     console.log(taskArray);
+        //     if (this.checked) {
+        //         alert(remove);
+        //         if(remove){
+
+        //             for(let i = 0; i < taskArray.length; ++i){
+        //                 if(taskArray[i] == name){
+        //                     // alert("match: " + taskArray[i] + " = " + name);
+        //                     taskArray[i] = "";
+        //                 }
+        //                 else{
+        //                     alert("no match");
+        //                 }
+        //             }
+        //             // document.getElementById(name).value = "";
+        //             // taskArray.remove(name);
+        //             // console.log(this.id + " has been removed..");
+
+        //         }
+        //         console.log(name + " is checked..");
+        //     } else {
+        //         console.log(this.id + " is not checked..");
+        //     }
+        // }
+
+        document.getElementById("addTaskButton").addEventListener("click", addTask);
+        document.getElementById("clear").addEventListener("click", clearList);
+        document.getElementById("showAllTasks").addEventListener("click", showAllTasks);
+        // document.getElementById("remove").addEventListener("click", removeItem);
+
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+<!-- function addTask(){
+    let eventName = document.getElementById("tasktitle").value;
+    taskArray.push(eventName);
+    // for(let i = 0; i < taskArray.length; ++i){
+        let box = document.createElement("input");
+        box.type = ("checkbox");
+        // box.value = (eventName);
+        let tag = document.createElement("p");
+
+    // document.getElementById("list").innerHTML = taskArray[0];
+    document.getElementById("list").append(eventName, box);
+    // }
+} -->
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Home Page</title>
+    </head>
+
+    <body>
+        <h1>To Do List</h1>
+
+        <form>
+            <button id = "showaddtask" type = "button">Add Task</button>
+        </form>
+        
+        <form method = "POST" id = "addtaskform" class = "addtask">
+            <button type = "button" id = "hideaddtask" class = "addtask">Back</button>
+            <input type = "text" id = "tasktitle" placeholder="Task Title..." class = "addtask" required>
+            input type = "time" id = "tasktime" class = "addtask" required> -->
+<!-- <input type = "date" id = "taskdate" class = "addtask" required> -->
+<!-- <button type = "button" id = "addtaskbutton">Add</button>
+        </form>
+        <script>
+            function showform(){
+                document.getElementById("addtaskform").style.display = "block";
+                document.getElementById("showaddtask").style.display = "none";
+            }
+            function funky(){
+            const title = document.getElementById("tasktitle").value;
+            const date = new Date(document.getElementById("taskdate").value);
+            const time = document.getElementById("tasktime").value;
+
+            document.getElementById("addtaskform").style.display = "none";
+            document.getElementById("showaddtask").style.display = "block";
+            }
+            document.getElementById("showaddtask").addEventListener("click",showform, false); //displays form to add event
+            document.getElementById("hideaddtask").addEventListener("click",function(){
+                document.getElementById("addtaskform").style.display = "none";
+                document.getElementById("showaddtask").style.display = "block";
+                }, false); 
+            document.getElementById("addtaskbutton").addEventListener("click", funky, false);
+
+        </script>
+
+    </body>
+</html> -->
+
+<!--
+    <!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Home Page</title>
+    </head>
+
+    <body>
+        <h1>To Do List</h1>
+
+        <form>
+            <button id = "showaddtask" type = "button">Add Task</button>
+        </form>
+        
+        <form method = "POST" id = "addtaskform" class = "addtask">
+            <button type = "button" id = "hideaddtask" class = "addtask">Back</button>
+            <input type = "text" id = "tasktitle" placeholder="Task Title..." class = "addtask" required>
+            <input type = "time" id = "tasktime" class = "addtask" required>
+            <input type = "date" id = "taskdate" class = "addtask" required>
+            <button type = "button" id = "addtaskbutton">Submit</button>
+        </form>
+        <script>
+
+        </script>
+
+    </body>
+</html>
+-->
