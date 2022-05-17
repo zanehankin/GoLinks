@@ -53,7 +53,7 @@
 
         completed = false; // A boolean to let us know when an item on the master list has been selected
         remove = false; // A boolean to let us know when the remove function is active, changing the header
-                        // and removing the next selected item from all 3 lists
+        // and removing the next selected item from all 3 lists
         ////
 
         ////
@@ -64,8 +64,8 @@
                 alert("Task Cannot Be Empty")
                 return;
             }
-            for(let i = 0; i < taskArray.length; ++i){ // Makes sure the task name is not a duplicate
-                if(taskArray[i] == eventName){
+            for (let i = 0; i < taskArray.length; ++i) { // Makes sure the task name is not a duplicate
+                if (taskArray[i] == eventName) {
                     alert("Cannot add duplicates to list");
                     return;
                 }
@@ -80,7 +80,7 @@
             li.appendChild(tag); // And attach the element Name to this list tag element
             document.getElementById("list").append(li); // Append this list tag with its attributes to the master "list"
             document.getElementById(li.id).addEventListener("click", clicked); // Finally, add an event listener for a click on the list  
-                                                                               // node which will be managed by the "clicked" function below
+            // node which will be managed by the "clicked" function below
             // Recount the values for the red array, since we added to it
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
             // Clear the input text box
@@ -147,8 +147,8 @@
             name = this.id;
             classs = this.className;
             // Set the boolean value of "completed"
-                // Completed means if the task was completed, so if it is green it is true
-                // Else the task is incomplete, thus red
+            // Completed means if the task was completed, so if it is green it is true
+            // Else the task is incomplete, thus red
             if (this.className == "green") {
                 completed = true;
             }
@@ -157,15 +157,15 @@
             }
             //
             // The following if statement will check if the remove boolean is true
-                // If it is true, the next click will be removed
-                // The if statement that checks if (completed) is to check if
-                    // The element should be removed from the Green list or Red List
-                // And then the item will be removed from the Master List
-            if (remove) { 
-                if(completed){
+            // If it is true, the next click will be removed
+            // The if statement that checks if (completed) is to check if
+            // The element should be removed from the Green list or Red List
+            // And then the item will be removed from the Master List
+            if (remove) {
+                if (completed) {
                     removeFromGreen(name);
                 }
-                else{
+                else {
                     removeFromRed(name);
                 }
                 removeFromTaskArray(name);
@@ -231,7 +231,7 @@
         ////
         // This function sets the BOOLEAN remove to the opposite of whatever it is
         // i.e. Since it starts at false, it will then be true once selected
-            // it will then be reset to false at the end of the removeFromTaskArray function
+        // it will then be reset to false at the end of the removeFromTaskArray function
         function removeItem() {
             console.log("remove");
             remove = !remove;
@@ -241,13 +241,19 @@
 
         ////
         // This function checks the status of the remove boolean, alerting the 
-            // user of this change at the top of the document if so
-        function checkRemove(){
-            if(remove){
-                document.getElementById("rio").style.display = "block";
+        // user of this change at the top of the document if so
+        function checkRemove() {
+            if (taskArray.length > 0) {
+                if (remove) {
+                    document.getElementById("rio").style.display = "block";
+                }
+                else {
+                    document.getElementById("rio").style.display = "none";
+                }
             }
-            else{
-                document.getElementById("rio").style.display = "none";
+            else {
+                alert("No tasks to remove");
+                return;
             }
         }
         ////
@@ -262,7 +268,7 @@
                 taskArray.length -= 1; // Update the task array length
             }
             remove = false; // Resets the remove variable (as mentioned above) which allows
-                            // users to continue using the to do list seemlessly after a removal
+            // users to continue using the to do list seemlessly after a removal
             // Update our counter
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
         }
