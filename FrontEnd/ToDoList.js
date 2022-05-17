@@ -200,7 +200,6 @@
     // user of this change at the top of the document if so
     function checkRemove() {
         if (taskArray.length > 0) {
-            alert(taskArray.length);
             if (remove) {
                 document.getElementById("rio").style.display = "block";
             }
