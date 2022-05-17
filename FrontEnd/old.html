@@ -20,6 +20,7 @@
             <input type="text" id="taskTitle" placeholder="Task Title..." class="addTask" required>
             <button type="button" id="addTaskButton">Add</button>
             <button type="button" id="clear">Clear List</button>
+            <button type="button" id="remove">Remove Item</button>
             <br>
             <button type="button" id="showAllTasks">Show All Tasks</button>
             <button type="button" id="showRed">Show Incompleted Tasks</button>
@@ -226,6 +227,7 @@
         document.getElementById("showAllTasks").addEventListener("click", showAllTasks);
         document.getElementById("showRed").addEventListener("click", showRed);
         document.getElementById("showGreen").addEventListener("click", showGreen);
+
         document.getElementById("green").style.display = "none";
         document.getElementById("red").style.display = "none";
         document.getElementById("list").style.display = "block";
