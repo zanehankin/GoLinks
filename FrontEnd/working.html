@@ -1,4 +1,4 @@
-<!-- 7:56am - 5/17 -->
+<!-- 7:21am - 5/17 -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,6 @@
 
 <body>
     <div class="doc">
-        <!-- Various titles depending on the page view -->
         <h1 id="td">To Do List - All Tasks</h1>
         <h1 id="ct">To Do List - Completed Tasks</h1>
         <h1 id="ict">To Do List - Incompleted Tasks</h1>
@@ -19,7 +18,6 @@
 
         <p id="stats"></p>
 
-        <!-- The form we use to input a new task, manage tasks, and manage page views -->
         <form method="POST" id="addTaskForm" class="addTask">
             <input type="text" id="taskTitle" placeholder="Task Title..." class="addTask" required>
             <button type="button" id="addTaskButton">Add</button>
@@ -31,65 +29,58 @@
             <button type="button" id="showGreen">Show Completed Tasks</button>
         </form>
 
-        <!-- A p tag that allows us some styling to make it look like lined paper -->
         <p class="lines" id="lines"></p>
 
-        <!-- The Lists that we append to. 1 master list w the id of "list", and 
-             2 separate lists for the incomplete (red) and complete (green) tasks -->
         <ul id="list"></ul>
+
         <ul id="red"></ul>
+
         <ul id="green"></ul>
 
     </div>
 
-    <!-- The beginning of our Javascrpt -->
     <script>
         ////
-        // Some global variables
-        // Arrays to store each of our three lists (as mentioned above)
-        const taskArray = []; // Master
-        const red = []; // Incompleted tasks
-        const green = []; // Completed tasks
-
-        completed = false; // A boolean to let us know when an item on the master list has been selected
-        remove = false; // A boolean to let us know when the remove function is active, changing the header
-                        // and removing the next selected item from all 3 lists
+        const taskArray = [];
+        completed = false;
+        selected = false;
+        remove = false;
+        const red = [];
+        const green = [];
         ////
 
         ////
-        // The function that adds tasks to the main list, or TASK ARRAY
         function addTask() {
-            let eventName = document.getElementById("taskTitle").value; // Takes the inputted name of a task
-            if (eventName == "") { // Makes sure the task name is not empty
+            let eventName = document.getElementById("taskTitle").value;
+            if (eventName == "") {
                 alert("Task Cannot Be Empty")
                 return;
             }
-            for(let i = 0; i < taskArray.length; ++i){ // Makes sure the task name is not a duplicate
+            for(let i = 0; i < taskArray.length; ++i){
                 if(taskArray[i] == eventName){
                     alert("Cannot add duplicates to list");
                     return;
                 }
             }
-            taskArray.push(eventName); // Push the name of the task to the array
-            addTaskToRed(eventName); // Since this is an incompleted task, also push this to the incompleted list
+            taskArray.push(eventName);
+            addTaskToRed(eventName);
 
-            let li = document.createElement("li"); // Then, create a list element
-            let tag = document.createTextNode(eventName); // Create a text node for the event name 
-            li.id = eventName; // Give the list tag some other attributes such as id and class name
+            let li = document.createElement("li");
+            let tag = document.createTextNode(eventName);
+            li.id = eventName;
             li.className = "red";
-            li.appendChild(tag); // And attach the element Name to this list tag element
-            document.getElementById("list").append(li); // Append this list tag with its attributes to the master "list"
-            document.getElementById(li.id).addEventListener("click", clicked); // Finally, add an event listener for a click on the list  
-                                                                               // node which will be managed by the "clicked" function below
-            // Recount the values for the red array, since we added to it
+            li.appendChild(tag);
+            document.getElementById("list").append(li);
+            document.getElementById(li.id).addEventListener("click", clicked);
+
+            console.log("1: RedL :" + red.length + " GreenL :" + green.length);
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
-            // Clear the input text box
+
             document.getElementById("taskTitle").value = '';
         }
         ////
 
         ////
-        // This function replicates what is done in addTask, but adds it specifically to the Red array
         function addTaskToRed(eventName) {
             red.push(eventName);
             let li = document.createElement("li");
@@ -102,7 +93,6 @@
         ////
 
         ////
-        // This function replicates what is done in addTask, but adds it specifically to the Green array
         function addTaskToGreen(eventName) {
             green.push(eventName);
             let li = document.createElement("li");
@@ -115,46 +105,42 @@
         ////
 
         ////
-        // This removes an element from the red array - which is helpful when switching an element between R & G
         function removeFromRed(eventName) {
-            if (red.length > 0) { // Ensures the length of the array is > 0
-                const element = document.getElementById(eventName + "r"); // Since red elements were given specific id's, we can remove them using them
+            if (red.length >= 1) {
+                const element = document.getElementById(eventName + "r");
                 element.remove();
-                red.length -= 1; // Subtract 1 from the length to ensure the size & count is correct
+                red.length -= 1;
             }
-            // Update our counter
+            console.log("2: RedL :" + red.length + " GreenL :" + green.length);
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
         }
         ////
 
         ////
-        // This removes an element from the green array - which is helpful when switching an element between R & G
-        // Functionality and process is the exact same as the removeFromRed above
         function removeFromGreen(eventName) {
-            if (green.length > 0) {
+            if (green.length >= 1) {
                 const element = document.getElementById(eventName + "g");
                 element.remove();
                 green.length -= 1;
+                // alert("removed from green");
             }
-            // Update our counter
+            console.log("3: RedL :" + red.length + " GreenL :" + green.length);
             document.getElementById("stats").innerHTML = "Incomplete: " + red.length + " | Complete: " + green.length;
         }
         ////
 
         ////
-        // This is used whenever a list node is clicked, so basically this is the main functionality
         function clicked() {
+            // alert("clicked");
             name = this.id;
             classs = this.className;
-            // Set the boolean value of "completed"
-                // 
+            // if(this.className == "red"){
             if (this.className == "green") {
                 completed = true;
             }
             else {
                 completed = false;
             }
-            //
             if (remove) {
                 if(completed){
                     removeFromGreen(name);
