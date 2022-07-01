@@ -1,6 +1,6 @@
 # GoLinks
  
-Link: http://ec2-54-151-98-104.us-west-1.compute.amazonaws.com/~zane/GoLinks-1/FrontEnd/ToDoList.html
+Link: http://ec2-54-151-98-104.us-west-1.compute.amazonaws.com/~zane/GoLinks/FrontEnd/ToDoList.html
 
 Functionality:
 
